@@ -1,0 +1,371 @@
+/* ---- Google Fonts ---- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+/*
+  Design tokens (for reference — NOT used as CSS variables because
+  wkhtmltopdf 0.12.6 / WebKit 534 does not support custom properties):
+
+  --forest:        #1a3a2a
+  --forest-mid:    #2e7d32
+  --forest-light:  #4caf50
+  --gold:          #c9a84c
+  --gold-light:    #f5e9c8
+  --off-white:     #faf8f4
+  --paper:         #fffefb
+  --text:          #1c1c1c
+  --text-muted:    #5a5a5a
+  --rule:          #d4ccc0
+
+  Callout colours:
+  tip-border:      #2e7d32   tip-bg:      #eef7ee
+  warning-border:  #e08c00   warning-bg:  #fff8e6
+  realtalk-border: #1565c0   realtalk-bg: #e8f0fe
+*/
+
+/* ---- Reset ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---- Base ---- */
+body {
+  font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.8;
+  color: #1c1c1c;
+  background: #fffefb;
+}
+
+/* ==============================================
+   COVER PAGE
+   ============================================== */
+.cover {
+  page-break-after: always;
+  position: relative;
+  margin-top:   -20mm;
+  margin-left:  -20mm;
+  margin-right: -20mm;
+  width: calc(100% + 40mm);
+  min-height: 297mm;
+  background: #1a3a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.cover-border {
+  position: absolute;
+  top:    12mm;
+  left:   12mm;
+  right:  12mm;
+  bottom: 12mm;
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  pointer-events: none;
+}
+
+.cover-content {
+  position: relative;
+  z-index: 1;
+  padding: 0 35mm;
+  max-width: 180mm;
+  width: 100%;
+}
+
+.cover-eyebrow {
+  font-family: 'Lato', sans-serif;
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 1.6rem;
+}
+
+.cover-rule-top,
+.cover-rule-bottom {
+  width: 48mm;
+  height: 1px;
+  background: #c9a84c;
+  margin: 0 auto;
+}
+
+.cover-rule-top  { margin-bottom: 1.6rem; }
+.cover-rule-bottom { margin-top: 1.6rem; margin-bottom: 2rem; }
+
+.cover-title {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: 36pt;
+  font-weight: 700;
+  line-height: 1.12;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  page-break-before: avoid !important;
+  border-bottom: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.cover-subtitle {
+  font-family: 'Lato', sans-serif;
+  font-size: 12.5pt;
+  font-weight: 300;
+  font-style: italic;
+  color: #f5e9c8;
+  line-height: 1.45;
+  margin-bottom: 0;
+}
+
+.cover-edition {
+  font-family: 'Lato', sans-serif;
+  font-size: 7.5pt;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 3.5rem;
+}
+
+/* ==============================================
+   TABLE OF CONTENTS PAGE
+   ============================================== */
+.toc-page {
+  page-break-after: always;
+  padding: 12mm 10mm 10mm;
+}
+
+.toc-header {
+  border-bottom: 2.5px solid #1a3a2a;
+  padding-bottom: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.toc-label {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22pt;
+  font-weight: 700;
+  color: #1a3a2a;
+  display: block;
+}
+
+nav#TOC ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav#TOC > ul > li {
+  padding: 0.45rem 0;
+  border-bottom: 1px solid #d4ccc0;
+  display: flex;
+  align-items: baseline;
+}
+
+nav#TOC > ul > li > a {
+  font-family: 'Lato', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #1a3a2a;
+  text-decoration: none;
+  flex: 1;
+}
+
+nav#TOC li li {
+  padding-left: 1.25rem;
+  border-bottom: none;
+  padding-top: 0.2rem;
+  padding-bottom: 0;
+}
+
+nav#TOC li li a {
+  font-size: 9pt;
+  font-weight: 400;
+  color: #5a5a5a;
+  text-decoration: none;
+}
+
+/* ==============================================
+   CONTENT AREA
+   ============================================== */
+.content {
+  padding: 4mm 0 0;
+}
+
+/* ==============================================
+   HEADINGS
+   ============================================== */
+h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26pt;
+  font-weight: 700;
+  color: #1a3a2a;
+  line-height: 1.15;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  padding-top: 14mm;
+  padding-bottom: 0.8rem;
+  page-break-before: always;
+  border-bottom: 3px solid #c9a84c;
+}
+
+h1:first-child {
+  page-break-before: avoid;
+}
+
+h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 700;
+  color: #1a3a2a;
+  margin-top: 2.75rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #d4ccc0;
+}
+
+h3 {
+  font-family: 'Lato', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+h3.key-takeaways-heading {
+  background: #1a3a2a;
+  color: #ffffff;
+  padding: 0.45rem 1rem;
+  letter-spacing: 0.1em;
+  font-size: 8.5pt;
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+  border-radius: 4px 4px 0 0;
+  display: block;
+  text-transform: uppercase;
+}
+
+/* ==============================================
+   BODY TEXT
+   ============================================== */
+p {
+  margin-bottom: 0.95rem;
+}
+
+ul, ol {
+  margin: 0.75rem 0 0.85rem 1.75rem;
+}
+
+li {
+  margin-bottom: 0.35rem;
+}
+
+strong {
+  font-weight: 700;
+  color: #111111;
+}
+
+em {
+  font-style: italic;
+}
+
+/* ==============================================
+   TABLES
+   ============================================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 9.5pt;
+  border: 1px solid #d4ccc0;
+}
+
+th {
+  background: #1a3a2a;
+  color: #ffffff;
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 9pt;
+  letter-spacing: 0.04em;
+}
+
+td {
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid #e8e2da;
+  vertical-align: top;
+}
+
+tr:nth-child(even) td {
+  background: #faf8f4;
+}
+
+/* ==============================================
+   CALLOUT BOXES
+   Classified by Lua filter at build time — no JS needed.
+   ============================================== */
+
+/* Default (fallback) */
+.callout {
+  border-left: 4px solid #2e7d32;
+  background: #eef7ee;
+  padding: 0.85rem 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: 0 6px 6px 0;
+  font-style: normal;
+}
+
+.callout p {
+  margin: 0;
+  font-size: 10pt;
+  line-height: 1.7;
+}
+
+/* Tip (💡) — green */
+.callout-tip {
+  border-left-color: #2e7d32;
+  background: #eef7ee;
+}
+
+/* Warning (⚠️) — amber */
+.callout-warning {
+  border-left-color: #e08c00;
+  background: #fff8e6;
+}
+
+/* Real talk (😄) — blue */
+.callout-realtalk {
+  border-left-color: #1565c0;
+  background: #e8f0fe;
+}
+
+/* ==============================================
+   KEY TAKEAWAYS
+   ============================================== */
+.key-takeaways-list {
+  background: #f0f7f1;
+  border: 1px solid #2e7d32;
+  border-top: none;
+  padding: 1rem 1.25rem 1rem 2.75rem;
+  border-radius: 0 0 4px 4px;
+  margin-top: 0;
+  margin-left: 0;
+  list-style-position: outside;
+}
+
+.key-takeaways-list li {
+  margin-bottom: 0.5rem;
+  font-size: 10pt;
+}
+
+/* ==============================================
+   PRINT MEDIA
+   ============================================== */
+@media print {
+  h1 { page-break-before: always; }
+  h1:first-child { page-break-before: avoid; }
+  h2, h3 { page-break-after: avoid; }
+  .callout, table, ul, ol { page-break-inside: avoid; }
+  .cover, .toc-page { page-break-after: always; }
+}
