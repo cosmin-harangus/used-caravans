@@ -67,12 +67,20 @@ build_edition() {
     "$combined_html" \
     "$body_pdf"
 
-  pdfunite "$cover_pdf" "$body_pdf" "$output_pdf"
+  if [ -f "$cover_pdf" ]; then
+    pdfunite "$cover_pdf" "$body_pdf" "$output_pdf"
+  else
+    echo "  (no cover PDF found — skipping cover merge)"
+    cp "$body_pdf" "$output_pdf"
+  fi
+
+  local epub_cover_arg=""
+  [ -f "$epub_cover" ] && epub_cover_arg="--epub-cover-image=$epub_cover"
 
   pandoc "$combined" \
     --from=markdown \
     --to=epub3 \
-    --epub-cover-image="$epub_cover" \
+    ${epub_cover_arg:+"$epub_cover_arg"} \
     --lua-filter=template/filters.lua \
     --css="$SCRIPT_DIR/template/epub.css" \
     --table-of-contents \
